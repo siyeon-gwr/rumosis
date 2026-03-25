@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUMOSIS</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #080808;
+  --text: #e8e4dc;
+  --text-dim: #555;
+  --text-mid: #999;
+  --accent: #c8b89a;
+  --line: rgba(255,255,255,0.06);
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'EB Garamond', Georgia, serif;
+  overflow: hidden;
+}
+
+/* grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.4;
+}
+
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 0 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* main */
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.2s forwards;
+}
+
+.wordmark {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(64px, 10vw, 120px);
+  font-weight: 400;
+  letter-spacing: -2px;
+  line-height: 0.9;
+  color: var(--text);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.4s forwards;
+}
+
+.wordmark em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.divider {
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: expandW 1s ease 0.7s forwards;
+  transform-origin: left;
+}
+
+.tagline {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.9s forwards;
+}
+
+/* footer */
+footer {
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.2s forwards;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.footer-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  color: var(--text-mid);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.footer-link:hover {
+  color: var(--accent);
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+.footer-right {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--text-mid);
+  letter-spacing: 1px;
+}
+
+/* cursor dot */
+.cursor {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+  mix-blend-mode: difference;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes expandW {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 24px; }
+  .footer-left { gap: 20px; }
+  .footer-right { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="container">
+  <main>
+    <div class="eyebrow">Est. 2024 · Singapore</div>
+    <h1 class="wordmark">RU<em>MO</em>SIS</h1>
+    <div class="divider"></div>
+    <p class="tagline">Proof of philosophy.</p>
+  </main>
+
+  <footer>
+    <div class="footer-left">
+      <a href="/cdn-cgi/l/email-protection#9be8f2e2fef4f5c4fcece9dbebe9f4eff4f5b5f6fe" class="footer-link">Contact</a>
+      <a href="https://siyeon.me" target="_blank" class="footer-link">Research</a>
+    </div>
+    <div class="footer-right">© 2024 RUMOSIS</div>
+  </footer>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const cursor = document.getElementById('cursor');
+document.add
